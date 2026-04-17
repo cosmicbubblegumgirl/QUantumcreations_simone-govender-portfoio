@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuantumCupCakeCreations</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Cdefs%3E%3ClinearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E%3Cstop stop-color=%22%23707BFF%22/%3E%3Cstop offset=%221%22 stop-color=%22%235FD1FF%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d=%22M18 37c0-8 6-14 14-14s14 6 14 14c0 6-5 11-11 11H29c-6 0-11-5-11-11Z%22 fill=%22url(%23g)%22/%3E%3Cpath d=%22M22 26c1-7 6-12 10-12s9 5 10 12%22 stroke=%22%23fff%22 stroke-width=%223%22 stroke-linecap=%22round%22/%3E%3Cpath d=%22M29 31h6v6h6v6h-6v6h-6v-6h-6v-6h6v-6Z%22 fill=%22%23fff%22/%3E%3Ccircle cx=%2249%22 cy=%2215%22 r=%223%22 fill=%22%23FFF4BF%22/%3E%3Ccircle cx=%2214%22 cy=%2218%22 r=%222%22 fill=%22%23C9F3FF%22/%3E%3C/svg%3E" />
+  
+  <style>
+    :root {
+      --bg: #eef5ff;
+      --bg-2: #fcf8ff;
+      --surface: rgba(255,255,255,0.74);
+      --surface-strong: rgba(255,255,255,0.9);
+      --line: rgba(62, 73, 122, 0.12);
+      --ink: #172033;
+      --muted: #5d6886;
+      --accent: #6d7cff;
+      --accent-2: #58b6ff;
+      --accent-3: #ffd37c;
+      --accent-4: #caa6ff;
+      --shadow: 0 28px 70px rgba(27, 42, 88, 0.14);
+      --radius-xl: 30px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --max: 1240px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #d9ebff 0%, #eef6ff 34%, #f8fbff 64%, #fff7fb 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+    body.night {
+      --surface: rgba(15, 21, 39, 0.68);
+      --surface-strong: rgba(17, 24, 44, 0.9);
+      --line: rgba(194, 213, 255, 0.12);
+      --ink: #edf4ff;
+      --muted: #b0bdd8;
+      --shadow: 0 28px 70px rgba(0, 0, 0, 0.36);
+      background: linear-gradient(180deg, #07111f 0%, #0b1830 40%, #15182d 72%, #1b1432 100%);
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 18% 16%, rgba(255,255,255,.65) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 78% 24%, rgba(255,255,255,.55) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 30% 72%, rgba(255,255,255,.4) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 84% 66%, rgba(255,255,255,.4) 0 1px, transparent 1.5px),
+        radial-gradient(ellipse at top, rgba(255,255,255,.28), transparent 48%),
+        radial-gradient(ellipse at bottom, rgba(255,209,243,.16), transparent 40%);
+      opacity: .44;
+      z-index: -1;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; color: inherit; }
+    .shell { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; position: relative; }
+    .glass {
+      background: var(--surface);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius-xl);
+    }
+    .sky-glow {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(255,255,255,.9), transparent 22%),
+        radial-gradient(circle at 80% 16%, rgba(180,223,255,.75), transparent 24%),
+        radial-gradient(circle at 50% 78%, rgba(255,205,233,.26), transparent 30%);
+    }
+    body.night .sky-glow {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(115,141,255,.22), transparent 24%),
+        radial-gradient(circle at 82% 22%, rgba(96,214,255,.14), transparent 28%),
+        radial-gradient(circle at 50% 80%, rgba(193,144,255,.12), transparent 34%);
+    }
+    #starfield { position: fixed; inset: 0; z-index: -2; opacity: .95; }
+    .progress { position: fixed; top: 0; left: 0; right: 0; height: 5px; z-index: 120; background: rgba(255,255,255,.2); backdrop-filter: blur(8px); }
+    .progress > span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-4)); border-radius: 999px; box-shadow: 0 0 20px rgba(109,124,255,.42); }
+    .nav-wrap { position: sticky; top: 10px; z-index: 100; padding-top: 18px; }
+    nav { display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 16px 18px; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.68)); backdrop-filter: blur(22px); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    body.night nav { background: linear-gradient(180deg, rgba(16,22,40,.84), rgba(15,21,39,.66)); }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .brand-mark { width: 54px; height: 54px; border-radius: 18px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, rgba(109,124,255,.98), rgba(88,182,255,.96) 55%, rgba(126,224,198,.95)); box-shadow: 0 18px 36px rgba(73,109,211,.28); border: 1px solid rgba(255,255,255,.32); }
+    .brand h1 { margin: 0; font-size: 14px; letter-spacing: .12em; text-transform: uppercase; }
+    .brand p { margin: 3px 0 0; color: var(--muted); font-size: 12px; }
+    .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .nav-links a, .theme-toggle, .hero-chip, .mini-btn, .filter-btn, .skill-tab {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.5);
+      color: var(--muted);
+      transition: .24s ease;
+    }
+    body.night .nav-links a, body.night .theme-toggle, body.night .hero-chip, body.night .mini-btn, body.night .filter-btn, body.night .skill-tab { background: rgba(255,255,255,.04); }
+    .nav-links a { padding: 10px 14px; border-radius: 999px; font-size: 12px; }
+    .nav-links a.active, .nav-links a:hover, .theme-toggle:hover, .filter-btn:hover, .filter-btn.active, .skill-tab.active, .skill-tab:hover {
+      color: var(--ink);
+      transform: translateY(-2px);
+      background: linear-gradient(135deg, rgba(109,124,255,.16), rgba(88,182,255,.12));
+      box-shadow: 0 12px 24px rgba(81, 55, 160, 0.12);
+    }
+    .theme-toggle { width: 44px; height: 44px; border-radius: 14px; cursor: pointer; display: grid; place-items: center; }
+    section { padding: 26px 0; }
+    .hero { padding-top: 46px; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items: stretch; }
+    .hero-card, .portrait-card, .journey-panel, .skills-main, .skills-orbit, .project-card, .achievement-card, .course-card, .badge-intro, .cert-map, .cert-detail, .contact-card { padding: 28px; }
+    .hero-card {
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,.68), rgba(255,255,255,.5));
+    }
+    body.night .hero-card { background: linear-gradient(180deg, rgba(17,24,44,.68), rgba(15,21,39,.52)); }
+    .hero-card::after { content: ""; position: absolute; right: -18%; bottom: -26%; width: 420px; height: 420px; border-radius: 50%; background: radial-gradient(circle, rgba(109,124,255,.18), transparent 60%); pointer-events: none; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; background: rgba(109,124,255,.11); color: #4c5de6; border: 1px solid rgba(109,124,255,.13); font-size: 12px; text-transform: uppercase; letter-spacing: .14em; margin-bottom: 18px; }
+    .hero h2 { font-size: clamp(2.8rem, 6vw, 5.7rem); line-height: .94; letter-spacing: -.045em; margin: 0 0 18px; max-width: 10.5ch; }
+    .hero p.lead { margin: 0; font-size: 1.08rem; line-height: 1.82; color: var(--muted); max-width: 63ch; }
+    .hero p.lead strong { color: var(--ink); }
+    .hero-chip-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .hero-chip { padding: 10px 12px; border-radius: 999px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
+    .mini-btn { padding: 14px 18px; border-radius: 16px; font-weight: 700; color: var(--ink); }
+    .mini-btn.primary { color: white; border-color: transparent; background: linear-gradient(135deg, var(--accent), #59caff 90%); box-shadow: 0 16px 30px rgba(90, 66, 190, 0.22); }
+    .mini-btn:hover { transform: translateY(-2px); }
+    .hero-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px; }
+    .metric { padding: 18px; border-radius: 20px; background: rgba(255,255,255,.48); border: 1px solid var(--line); }
+    body.night .metric { background: rgba(255,255,255,.03); }
+    .metric strong { display: block; font-size: 1.7rem; margin-bottom: 6px; }
+    .metric span { display: block; font-size: .94rem; line-height: 1.5; color: var(--muted); }
+    .portrait-card { display: grid; gap: 16px; }
+    .portrait-frame { position: relative; min-height: 560px; border-radius: 28px; overflow: hidden; background: linear-gradient(180deg, rgba(109,124,255,.14), rgba(255,255,255,.92)); border: 1px solid var(--line); }
+    .portrait-frame img { width: 100%; height: 100%; object-fit: cover; object-position: center 18%; }
+    .portrait-note { position: absolute; left: 18px; right: 18px; bottom: 18px; padding: 16px 18px; border-radius: 18px; background: rgba(18, 13, 30, .66); color: #fff; border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(12px); }
+    .portrait-note strong { display: block; font-size: 1rem; margin-bottom: 6px; }
+    .hero-spotlight { display: grid; grid-template-columns: 110px 1fr; gap: 14px; align-items: center; border-radius: 24px; padding: 18px; border: 1px solid var(--line); background: linear-gradient(135deg, rgba(109,124,255,.1), rgba(88,182,255,.08), rgba(255,255,255,.4)); }
+    body.night .hero-spotlight { background: linear-gradient(135deg, rgba(109,124,255,.16), rgba(88,182,255,.08), rgba(255,255,255,.03)); }
+    .hero-spotlight img { width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 18px; background: rgba(255,255,255,.95); padding: 10px; border: 1px solid var(--line); }
+    .hero-spotlight h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .hero-spotlight p { margin: 0; color: var(--muted); line-height: 1.6; font-size: .95rem; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 16px; margin-bottom: 20px; }
+    .section-head h3 { margin: 0 0 10px; font-size: clamp(1.8rem, 3.2vw, 3rem); letter-spacing: -.03em; }
+    .section-head p { margin: 0; color: var(--muted); line-height: 1.75; max-width: 68ch; }
+    .journey-layout { display: grid; grid-template-columns: .85fr 1.15fr; gap: 22px; align-items: stretch; }
+    .stop-list { display: grid; gap: 12px; }
+    .stop-card { padding: 20px; text-align: left; cursor: pointer; border: 1px solid var(--line); }
+    .stop-card.active { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(81,55,160,.12); background: linear-gradient(135deg, rgba(109,124,255,.14), rgba(88,182,255,.1), rgba(255,255,255,.48)); }
+    .stop-index { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; font-weight: 800; margin-bottom: 10px; }
+    .stop-card small { display: block; color: var(--muted); text-transform: uppercase; letter-spacing: .14em; font-size: 11px; margin-bottom: 8px; }
+    .stop-card h4 { margin: 0; font-size: 1rem; }
+    .journey-panel { position: relative; overflow: hidden; min-height: 100%; }
+    .journey-panel::before { content: ""; position: absolute; inset: 24px 24px auto auto; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(88,182,255,.12), transparent 70%); }
+    .path-line { height: 10px; margin: 10px 0 18px; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent-4)); opacity: .65; }
+    .stop-detail { display: none; animation: fadeUp .3s ease; position: relative; z-index: 1; }
+    .stop-detail.active { display: block; }
+    .stop-detail h4 { font-size: 1.8rem; margin: 0 0 12px; }
+    .stop-detail p { margin: 0; color: var(--muted); line-height: 1.85; font-size: 1.02rem; max-width: 56ch; }
+    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; align-items: stretch; }
+    .skills-main, .skills-orbit { padding: 28px; }
+    .skill-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    .skill-tab { padding: 10px 14px; border-radius: 999px; cursor: pointer; }
+    .skill-panel { display: none; }
+    .skill-panel.active { display: block; }
+    .skill-panel h4 { margin: 0 0 10px; font-size: 1.45rem; }
+    .skill-panel p { margin: 0 0 16px; line-height: 1.8; color: var(--muted); }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tag-cloud span { padding: 10px 12px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.48); font-size: .92rem; }
+    body.night .tag-cloud span { background: rgba(255,255,255,.04); }
+    .tag-cloud.compact span { font-size: .84rem; padding: 8px 10px; }
+    .skills-orbit { position: relative; overflow: hidden; display: grid; place-items: center; min-height: 460px; }
+    .orbit-ring, .orbit-ring::before, .orbit-ring::after { position: absolute; border-radius: 50%; border: 1px dashed rgba(109,124,255,.22); content: ""; }
+    .orbit-ring { width: 330px; height: 330px; }
+    .orbit-ring::before { inset: 32px; border-color: rgba(88,182,255,.22); }
+    .orbit-ring::after { inset: 64px; border-color: rgba(202,166,255,.22); }
+    .orbit-core { position: relative; width: 210px; height: 210px; padding: 28px; border-radius: 50%; display: grid; place-items: center; text-align: center; background: linear-gradient(135deg, rgba(109,124,255,.18), rgba(88,182,255,.14), rgba(255,255,255,.72)); border: 1px solid var(--line); box-shadow: var(--shadow); z-index: 2; }
+    body.night .orbit-core { background: linear-gradient(135deg, rgba(109,124,255,.22), rgba(88,182,255,.16), rgba(255,255,255,.04)); }
+    .orbit-core strong { display: block; font-size: 1.2rem; margin-bottom: 8px; }
+    .orbit-core span { color: var(--muted); line-height: 1.6; font-size: .95rem; }
+    .orbit-node { position: absolute; padding: 12px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface-strong); box-shadow: var(--shadow); font-size: .9rem; animation: drift 8s ease-in-out infinite; }
+    .orbit-node:nth-child(2) { top: 30px; left: 52%; animation-delay: -1s; }
+    .orbit-node:nth-child(3) { right: 36px; top: 148px; animation-delay: -3s; }
+    .orbit-node:nth-child(4) { right: 88px; bottom: 52px; animation-delay: -2s; }
+    .orbit-node:nth-child(5) { left: 54px; bottom: 62px; animation-delay: -4s; }
+    .orbit-node:nth-child(6) { left: 16px; top: 154px; animation-delay: -5s; }
+    .orbit-node:nth-child(7) { left: 94px; top: 42px; animation-delay: -6s; }
+    @keyframes drift { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+    .filter-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+    .filter-btn { padding: 10px 14px; border-radius: 999px; cursor: pointer; }
+    .projects-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .project-card { display: grid; gap: 14px; position: relative; overflow: hidden; }
+    .project-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(109,124,255,.08), transparent 34%, rgba(88,182,255,.08)); opacity: 0; transition: .24s ease; pointer-events: none; }
+    .project-card:hover::before { opacity: 1; }
+    .project-card:hover { transform: translateY(-4px); }
+    .project-topline { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .project-category, .project-site { font-size: 11px; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); padding: 8px 10px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,.45); }
+    body.night .project-category, body.night .project-site { background: rgba(255,255,255,.04); }
+    .project-card h4 { margin: 0; font-size: 1.35rem; }
+    .project-card p { margin: 0; color: var(--muted); line-height: 1.75; }
+    .why-box { padding: 14px; border-radius: 18px; border: 1px solid var(--line); background: rgba(109,124,255,.06); }
+    .why-box strong { display: block; margin-bottom: 8px; font-size: .95rem; }
+    .ghost-btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 14px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.5); font-weight: 700; }
+    body.night .ghost-btn { background: rgba(255,255,255,.04); }
+    .card-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .achievement-layout { display: grid; grid-template-columns: 1fr .95fr; gap: 22px; }
+    .achievement-card, .course-card { padding: 28px; }
+    .achievement-card { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 20px; align-items: center; }
+    .achievement-art, .cert-thumb, .cert-feature-art, .modal-art, .badge-art { background: linear-gradient(180deg, #f8fbff, #ffffff); }
+    .achievement-art { border-radius: 24px; overflow: hidden; border: 1px solid var(--line); padding: 16px; }
+    .achievement-art img { width: 100%; aspect-ratio: 16/10; object-fit: contain; }
+    .achievement-copy h4 { margin: 0 0 12px; font-size: 1.8rem; }
+    .achievement-copy p { margin: 0 0 14px; color: var(--muted); line-height: 1.78; }
+    .signal-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+    .signal-row span { padding: 9px 12px; border-radius: 999px; background: rgba(109,124,255,.1); border: 1px solid rgba(109,124,255,.15); }
+    .course-card h4 { margin: 0 0 12px; font-size: 1.4rem; }
+    .course-card p { margin: 0 0 16px; color: var(--muted); line-height: 1.75; }
+    .course-list { display: grid; gap: 10px; padding: 0; margin: 0; list-style: none; }
+    .course-list li { padding: 12px 14px; border-radius: 16px; border: 1px solid var(--line); background: rgba(255,255,255,.46); }
+    body.night .course-list li { background: rgba(255,255,255,.04); }
+    .badge-intro { margin-bottom: 18px; background: linear-gradient(135deg, rgba(109,124,255,.12), rgba(88,182,255,.08), rgba(255,255,255,.44)); }
+    body.night .badge-intro { background: linear-gradient(135deg, rgba(109,124,255,.18), rgba(88,182,255,.08), rgba(255,255,255,.03)); }
+    .badge-intro p { margin: 0; color: var(--muted); line-height: 1.78; max-width: 70ch; }
+    .badge-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+    .badge-card { padding: 16px; text-align: left; cursor: pointer; }
+    .badge-card:nth-child(2), .badge-card:nth-child(4), .badge-card:nth-child(6) { transform: translateY(12px); }
+    .badge-card:hover { transform: translateY(-4px) scale(1.01); }
+    .badge-art { aspect-ratio: 1/1; display: grid; place-items: center; padding: 16px; border-radius: 20px; border: 1px solid var(--line); }
+    .badge-art img { width: 100%; height: 100%; object-fit: contain; }
+    .badge-copy { padding-top: 12px; display: grid; gap: 6px; }
+    .badge-copy h5 { margin: 0; font-size: 1rem; line-height: 1.4; }
+    .badge-copy p { margin: 0; color: var(--muted); font-size: .92rem; }
+    .certificate-layout { display: grid; grid-template-columns: 1.2fr .8fr; gap: 22px; align-items: start; }
+    .cert-map { position: relative; overflow: hidden; }
+    .cert-map::before { content: ""; position: absolute; inset: 0; background:
+      radial-gradient(circle at 20% 18%, rgba(109,124,255,.14), transparent 18%),
+      radial-gradient(circle at 82% 26%, rgba(88,182,255,.14), transparent 18%),
+      radial-gradient(circle at 26% 78%, rgba(202,166,255,.12), transparent 18%); opacity: .8; pointer-events: none; }
+    .cert-map::after { content: ""; position: absolute; inset: 48px; border: 1px dashed rgba(109,124,255,.18); border-radius: 32px; pointer-events: none; }
+    .cert-map-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .cert-node { padding: 14px; text-align: left; cursor: pointer; }
+    .cert-node.active, .cert-node:hover { transform: translateY(-3px); border-color: rgba(109,124,255,.25); box-shadow: 0 18px 36px rgba(81,55,160,.14); }
+    .cert-thumb { aspect-ratio: 4/3; border-radius: 18px; border: 1px solid var(--line); padding: 12px; display: grid; place-items: center; overflow: hidden; }
+    .cert-thumb img { width: 100%; height: 100%; object-fit: contain; }
+    .cert-node-copy { padding-top: 12px; }
+    .cert-node-copy h5 { margin: 0; font-size: 1rem; line-height: 1.4; }
+    .cert-detail { position: sticky; top: 92px; }
+    .cert-feature-art { aspect-ratio: 4/3; border-radius: 22px; border: 1px solid var(--line); padding: 16px; display: grid; place-items: center; overflow: hidden; }
+    .cert-feature-art img { width: 100%; height: 100%; object-fit: contain; cursor: zoom-in; }
+    .cert-detail h4 { margin: 16px 0 10px; font-size: 1.6rem; }
+    .cert-detail p { margin: 0 0 16px; color: var(--muted); line-height: 1.8; }
+    .constellation-note { padding: 14px; border-radius: 18px; background: rgba(109,124,255,.08); border: 1px solid rgba(109,124,255,.14); color: var(--ink); }
+    .contact-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+    .contact-card { display: block; }
+    .contact-card small { display: block; color: var(--muted); text-transform: uppercase; letter-spacing: .14em; font-size: 11px; margin-bottom: 8px; }
+    .contact-card strong { display: block; font-size: 1rem; line-height: 1.6; }
+    footer { padding: 8px 0 28px; }
+    .footer-box { padding: 12px 16px; display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .footer-box p { margin: 0; color: var(--muted); line-height: 1.7; }
+    .signature { font-weight: 700; letter-spacing: .08em; text-transform: none; font-size: .88rem; }
+    .footer-minimal { min-height: 52px; }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    .hidden { display: none !important; }
+    .modal { position: fixed; inset: 0; background: rgba(8, 6, 16, .72); display: none; place-items: center; padding: 24px; z-index: 160; }
+    .modal.open { display: grid; }
+    .modal-box { width: min(1100px, 100%); max-height: 90vh; overflow: auto; padding: 18px; border-radius: 28px; background: var(--surface-strong); border: 1px solid var(--line); box-shadow: var(--shadow); }
+    .modal-head { display: flex; justify-content: space-between; gap: 12px; align-items: center; margin-bottom: 14px; }
+    .modal-head h4 { margin: 0; font-size: 1.2rem; }
+    .modal-head p { margin: 4px 0 0; color: var(--muted); }
+    .modal-close { width: 42px; height: 42px; border-radius: 14px; border: 1px solid var(--line); background: rgba(255,255,255,.5); cursor: pointer; }
+    body.night .modal-close { background: rgba(255,255,255,.05); }
+    .modal-art { border-radius: 22px; border: 1px solid var(--line); padding: 18px; }
+    .modal-art img { width: 100%; height: auto; object-fit: contain; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+    @media (max-width: 1080px) {
+      .hero-grid, .journey-layout, .skills-layout, .achievement-layout, .certificate-layout { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .badge-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .contact-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+      .hero h2 { max-width: 12ch; }
+      .achievement-card { grid-template-columns: 1fr; }
+      .cert-detail { position: static; }
+    }
+    @media (max-width: 760px) {
+      .shell { width: min(var(--max), calc(100% - 20px)); }
+      nav { border-radius: 28px; padding: 14px; }
+      .nav-links { display: none; }
+      .hero-card, .portrait-card, .journey-panel, .skills-main, .skills-orbit, .project-card, .achievement-card, .course-card, .badge-intro, .cert-map, .cert-detail, .contact-card { padding: 22px; }
+      .hero-metrics, .contact-grid, .badge-grid, .cert-map-grid { grid-template-columns: 1fr; }
+      .badge-card:nth-child(2), .badge-card:nth-child(4), .badge-card:nth-child(6) { transform: none; }
+      .portrait-frame { min-height: 440px; }
+      .hero h2 { font-size: clamp(2.4rem, 15vw, 3.8rem); }
+      .hero-spotlight { grid-template-columns: 88px 1fr; }
+      .skills-orbit { min-height: 380px; }
+      .orbit-ring { width: 260px; height: 260px; }
+      .orbit-core { width: 168px; height: 168px; padding: 18px; }
+      .orbit-node { font-size: .8rem; padding: 10px 12px; }
+    }
+  </style>
+
+</head>
+<body>
+  <div class="sky-glow" aria-hidden="true"></div>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+  <div class="progress"><span id="progressBar"></span></div>
+
+  <div class="shell nav-wrap">
+    <nav aria-label="Primary">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="26" height="26" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M18 37c0-8 6-14 14-14s14 6 14 14c0 6-5 11-11 11H29c-6 0-11-5-11-11Z" fill="url(#g1)"/>
+            <path d="M22 26c1-7 6-12 10-12s9 5 10 12" stroke="white" stroke-width="3" stroke-linecap="round"/>
+            <path d="M29 31h6v6h6v6h-6v6h-6v-6h-6v-6h6v-6Z" fill="white" opacity=".96"/>
+            <circle cx="49" cy="15" r="3" fill="#FFF4BF"/>
+            <circle cx="14" cy="18" r="2" fill="#C9F3FF"/>
+            <path d="M50 22l1.5 3L55 26.5l-3.5 1.5L50 31l-1.5-3-3.5-1.5 3.5-1.5L50 22Z" fill="white"/>
+            <defs>
+              <linearGradient id="g1" x1="17" y1="18" x2="47" y2="50" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#8E88FF"/>
+                <stop offset=".5" stop-color="#67C4FF"/>
+                <stop offset="1" stop-color="#7EE2C6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div>
+          <h1>QuantumCupCakeCreations</h1>
+          <p>My journey</p>
+        </div>
+      </div>
+      <div class="nav-links"><a href="#journey">Journey</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#achievement">Achievement</a><a href="#badges">Badges</a><a href="#certificates">Certificates</a><a href="#contact">Contact</a></div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle night mode">☾</button>
+    </nav>
+  </div>
+
+  <header class="hero" id="top">
+    <div class="shell hero-grid">
+      <article class="hero-card glass reveal">
+        <div class="eyebrow">Whimsical professional journey</div>
+        <h2>I build digital experiences with imagination and structure.</h2>
+        <p class="lead">I am <strong>Simoné Govender</strong>, a multi-faceted digital expert ranging from <strong>website design to SAP, education, and communications</strong>. It is fun for me to create websites and applications that are both creative and practical, where they seem creative on the outside but are well-structured and helpful on the inside.</p>
+        <div class="hero-chip-row">
+          <span class="hero-chip">Full-stack growth</span>
+          <span class="hero-chip">Creative front end</span>
+          <span class="hero-chip">User-centred UX</span>
+          <span class="hero-chip">Data literacy</span>
+          <span class="hero-chip">Enterprise awareness</span>
+          <span class="hero-chip">Communication-first</span>
+        </div>
+        <div class="cta-row">
+          <a class="mini-btn primary" href="#journey">Start the journey</a>
+          <a class="mini-btn" href="#projects">Open my project trail</a>
+          <a class="mini-btn" href="https://www.linkedin.com/in/simone-govender-91b8b2353" target="_blank" rel="noreferrer">Visit LinkedIn</a>
+        </div>
+        <div class="hero-metrics">
+          <div class="metric"><strong>6</strong><span>featured websites in my project trail</span></div>
+          <div class="metric"><strong>10</strong><span>featured badges in my badge nebula</span></div>
+          <div class="metric"><strong>2026</strong><span>latest milestone: IBM Full-Stack JavaScript Developer</span></div>
+        </div>
+      </article>
+
+      <aside class="portrait-card glass reveal">
+        <div class="portrait-frame">
+          <img src="assets/profile.jpg" alt="Portrait of Simoné Govender" />
+          <div class="portrait-note">
+            <strong>This space is designed like a journey.</strong>
+            <span>I wanted my portfolio to feel clean, immersive, and memorable while still showing the full range of what I can do.</span>
+          </div>
+        </div>
+        <div class="hero-spotlight">
+          <img src="assets/certs/ibm_fullstack.png" alt="IBM Full-Stack JavaScript Developer certificate" loading="lazy" />
+          <div>
+            <h3>Latest spotlight</h3>
+            <p>My IBM Full-Stack JavaScript Developer Professional Certificate is the main observatory in this build because it shows where my growth is heading next.</p>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section id="journey">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <h3>The journey map</h3>
+            
+          </div>
+        </div>
+        <div class="journey-layout">
+          <div class="stop-list reveal"><button class="stop-card glass stop-trigger active" data-stop="0" aria-pressed="true">
+          <span class="stop-index">01</span>
+          <small>Origin</small>
+          <h4>I started by building a multidisciplinary foundation.</h4>
+        </button>
+<button class="stop-card glass stop-trigger" data-stop="1" aria-pressed="false">
+          <span class="stop-index">02</span>
+          <small>Approach</small>
+          <h4>I design with both feeling and function in mind.</h4>
+        </button>
+<button class="stop-card glass stop-trigger" data-stop="2" aria-pressed="false">
+          <span class="stop-index">03</span>
+          <small>Craft</small>
+          <h4>I like making interfaces feel alive.</h4>
+        </button>
+<button class="stop-card glass stop-trigger" data-stop="3" aria-pressed="false">
+          <span class="stop-index">04</span>
+          <small>Growth</small>
+          <h4>I am actively growing into full-stack development.</h4>
+        </button>
+<button class="stop-card glass stop-trigger" data-stop="4" aria-pressed="false">
+          <span class="stop-index">05</span>
+          <small>Value</small>
+          <h4>I bring versatility to a team.</h4>
+        </button></div>
+          <article class="journey-panel glass reveal">
+            <div class="eyebrow">Follow the trail</div>
+            <div class="path-line"></div>
+            <div class="stop-detail active" data-stop-panel="0">
+          <h4>I started by building a multidisciplinary foundation.</h4>
+          <p>My path connects web development, data analytics, UX, SAP, education, and communication instead of keeping them in separate boxes.</p>
+        </div>
+<div class="stop-detail" data-stop-panel="1">
+          <h4>I design with both feeling and function in mind.</h4>
+          <p>I care about clarity, warmth, and usability just as much as visual polish and technical structure.</p>
+        </div>
+<div class="stop-detail" data-stop-panel="2">
+          <h4>I like making interfaces feel alive.</h4>
+          <p>My projects use storytelling, motion, and personality, but I always try to keep the experience easy to follow and clean to use.</p>
+        </div>
+<div class="stop-detail" data-stop-panel="3">
+          <h4>I am actively growing into full-stack development.</h4>
+          <p>My latest IBM professional certificate pushed me further into JavaScript, Node.js, Express, DevOps, cloud-native thinking, and delivery workflows.</p>
+        </div>
+<div class="stop-detail" data-stop-panel="4">
+          <h4>I bring versatility to a team.</h4>
+          <p>I can move between research, communication, technical execution, documentation, and user-centred thinking without losing coherence.</p>
+        </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <h3>Skill constellations</h3>
+            
+          </div>
+        </div>
+        <div class="skills-layout">
+          <article class="skills-main glass reveal">
+            <div class="skill-tabs"><button class="skill-tab active" data-skill="frontend" aria-pressed="true">Front End</button>
+<button class="skill-tab" data-skill="fullstack" aria-pressed="false">Full Stack</button>
+<button class="skill-tab" data-skill="data" aria-pressed="false">Data & AI</button>
+<button class="skill-tab" data-skill="ux" aria-pressed="false">UX & Research</button>
+<button class="skill-tab" data-skill="enterprise" aria-pressed="false">Enterprise</button>
+<button class="skill-tab" data-skill="people" aria-pressed="false">Communication</button></div>
+            <article class="skill-panel active" data-skill-panel="frontend">
+          <h4>I build front ends with personality and structure.</h4>
+          <p>I enjoy turning ideas into interfaces that feel distinctive, responsive, and easy to understand. I pay attention to pacing, layout, hierarchy, and the little details that make a screen feel intentional.</p>
+          <div class="tag-cloud"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>React basics</span><span>Responsive layouts</span><span>Theming</span><span>Micro-interactions</span><span>Front-end deployment</span></div>
+        </article>
+<article class="skill-panel" data-skill-panel="fullstack">
+          <h4>I am growing into full-stack JavaScript with purpose.</h4>
+          <p>My IBM path expanded my toolkit into backend logic, deployment-minded development, containers, microservices, and cloud-native workflows. I like understanding how the whole system fits together.</p>
+          <div class="tag-cloud"><span>Node.js</span><span>Express</span><span>Git</span><span>GitHub</span><span>DevOps</span><span>CI/CD</span><span>NoSQL</span><span>Docker</span><span>Kubernetes</span><span>OpenShift</span><span>Microservices</span><span>Serverless</span></div>
+        </article>
+<article class="skill-panel" data-skill-panel="data">
+          <h4>I pair creativity with analytical thinking.</h4>
+          <p>Data work gives me another way to solve problems. I enjoy cleaning information, finding patterns, and shaping results into something useful and readable.</p>
+          <div class="tag-cloud"><span>SQL</span><span>Python</span><span>pandas</span><span>Statistics</span><span>Power BI</span><span>Matplotlib</span><span>Seaborn</span><span>KNIME</span><span>Data modelling</span><span>Data cleaning</span></div>
+        </article>
+<article class="skill-panel" data-skill-panel="ux">
+          <h4>I think deeply about people, not just pages.</h4>
+          <p>My UX and research training influences how I build. I try to create journeys that feel clear, considerate, and grounded in real user needs.</p>
+          <div class="tag-cloud"><span>User-centred design</span><span>Research</span><span>Problem-solving</span><span>Interaction design</span><span>Visual hierarchy</span><span>Documentation</span><span>Structured delivery</span></div>
+        </article>
+<article class="skill-panel" data-skill-panel="enterprise">
+          <h4>I understand that digital work also lives inside larger systems.</h4>
+          <p>My SAP learning gave me useful exposure to enterprise systems, solution design, discovery, and implementation thinking. It helps me see beyond the interface.</p>
+          <div class="tag-cloud"><span>SAP fundamentals</span><span>Solution design</span><span>Implementation</span><span>Customer engagement</span><span>Enterprise systems</span><span>Technology consulting</span></div>
+        </article>
+<article class="skill-panel" data-skill-panel="people">
+          <h4>I communicate with clarity, patience, and empathy.</h4>
+          <p>My education background shaped the way I explain ideas, guide learning, and structure information. That translates directly into better collaboration and better user experiences.</p>
+          <div class="tag-cloud"><span>Written communication</span><span>Presentation</span><span>Teaching principles</span><span>Lesson design</span><span>Learner guidance</span><span>Stakeholder communication</span></div>
+        </article>
+          </article>
+          <aside class="skills-orbit glass reveal" aria-hidden="true">
+            <div class="orbit-ring"></div>
+            <div class="orbit-node">Front end</div>
+            <div class="orbit-node">Full stack</div>
+            <div class="orbit-node">Data & AI</div>
+            <div class="orbit-node">UX design</div>
+            <div class="orbit-node">SAP</div>
+            <div class="orbit-node">Communication</div>
+            <div class="orbit-core">
+              <div>
+                <strong>My work sits at the centre of structure and imagination.</strong>
+                <span>I enjoy designing experiences that feel thoughtful, useful, and visually alive.</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <h3>Project trail</h3>
+            <p>These are my six featured web projects. I wanted each one to say something slightly different about me, so the trail includes utility tools, reflective experiences, creative interfaces, and story-led builds.</p>
+          </div>
+        </div>
+        <div class="filter-row reveal"><button class="filter-btn active" data-filter="all">All projects</button><button class="filter-btn" data-filter="impact">Impact</button><button class="filter-btn" data-filter="wellbeing">Wellbeing</button><button class="filter-btn" data-filter="utility">Utility</button><button class="filter-btn" data-filter="travel">Travel</button></div>
+        <div class="projects-grid"><article class="project-card glass reveal" data-project-category="impact">
+      <div class="project-topline">
+        <span class="project-category">Impact</span>
+        <span class="project-site">GitHub Pages</span>
+      </div>
+      <h4>Carbon Crumbs</h4>
+      <p>I designed this project to make sustainability feel encouraging instead of heavy. It turns everyday carbon awareness into something visual, gentle, and practical.</p>
+      <div class="why-box">
+        <strong>Why I built it</strong>
+        <p>I wanted to show that problem-solving can still feel warm and human, even when the topic is data and behaviour change.</p>
+      </div>
+      <div class="tag-cloud compact"><span>JavaScript</span><span>Local storage</span><span>Insight panels</span><span>UX writing</span></div>
+      <div class="card-actions">
+        <a class="ghost-btn" href="https://cosmicbubblegumgirl.github.io/carbon-crumbs/" target="_blank" rel="noreferrer">Open live project</a>
+      </div>
+    </article>
+<article class="project-card glass reveal" data-project-category="wellbeing">
+      <div class="project-topline">
+        <span class="project-category">Wellbeing</span>
+        <span class="project-site">GitHub Pages</span>
+      </div>
+      <h4>Mind Check</h4>
+      <p>I created this as a softer check-in experience that gives space for reflection without overwhelming the user.</p>
+      <div class="why-box">
+        <strong>Why I built it</strong>
+        <p>I wanted to explore emotional design, supportive interface language, and clarity in a wellness-focused flow.</p>
+      </div>
+      <div class="tag-cloud compact"><span>Front-end UI</span><span>Forms</span><span>Accessible language</span><span>Interaction design</span></div>
+      <div class="card-actions">
+        <a class="ghost-btn" href="http://cosmicbubblegumgirl.github.io/mind-check/" target="_blank" rel="noreferrer">Open live project</a>
+      </div>
+    </article>
+<article class="project-card glass reveal" data-project-category="utility">
+      <div class="project-topline">
+        <span class="project-category">Utility</span>
+        <span class="project-site">GitHub Pages</span>
+      </div>
+      <h4>Deductomatic</h4>
+      <p>I built a practical South African tax calculator with live insights, history, and budgeting support so that finance feels less intimidating.</p>
+      <div class="why-box">
+        <strong>Why I built it</strong>
+        <p>I wanted to prove I can build tools that are useful, localized, and visually polished at the same time.</p>
+      </div>
+      <div class="tag-cloud compact"><span>JavaScript logic</span><span>Financial UX</span><span>Responsive UI</span><span>Theme controls</span></div>
+      <div class="card-actions">
+        <a class="ghost-btn" href="https://cosmicbubblegumgirl.github.io/deductomatic/" target="_blank" rel="noreferrer">Open live project</a>
+      </div>
+    </article>
+<article class="project-card glass reveal" data-project-category="utility">
+      <div class="project-topline">
+        <span class="project-category">Utility</span>
+        <span class="project-site">GitHub Pages</span>
+      </div>
+      <h4>Whimsical Simple Interest Calculator</h4>
+      <p>I made this calculator to simplify a core finance concept through friendly design, immediate feedback, and a clear input flow.</p>
+      <div class="why-box">
+        <strong>Why I built it</strong>
+        <p>I wanted to show that educational tools can look joyful while still being accurate and easy to use.</p>
+      </div>
+      <div class="tag-cloud compact"><span>JavaScript</span><span>Form handling</span><span>Validation</span><span>UI feedback</span></div>
+      <div class="card-actions">
+        <a class="ghost-btn" href="https://cosmicbubblegumgirl.github.io/whimsical-simple-interest-calculator/" target="_blank" rel="noreferrer">Open live project</a>
+      </div>
+    </article>
+<article class="project-card glass reveal" data-project-category="wellbeing">
+      <div class="project-topline">
+        <span class="project-category">Wellbeing</span>
+        <span class="project-site">GitHub Pages</span>
+      </div>
+      <h4>Normal Is Overrated</h4>
+      <p>This reflective browser-based experience creates space for self-discovery, progress tracking, and private note-taking.</p>
+      <div class="why-box">
+        <strong>Why I built it</strong>
+        <p>I built it because I care about creating digital spaces that feel thoughtful, validating, and personal.</p>
+      </div>
+      <div class="tag-cloud compact"><span>Dynamic states</span><span>Local storage</span><span>Questionnaire flow</span><span>Reflective UX</span></div>
+      <div class="card-actions">
+        <a class="ghost-btn" href="https://cosmicbubblegumgirl.github.io/normal_is-_overrated/" target="_blank" rel="noreferrer">Open live project</a>
+      </div>
+    </article>
+<article class="project-card glass reveal" data-project-category="travel">
+      <div class="project-topline">
+        <span class="project-category">Travel</span>
+        <span class="project-site">GitHub Pages</span>
+      </div>
+      <h4>Travel Recommendations</h4>
+      <p>I designed this as a more atmospheric way to explore destinations, route ideas, and discovery content.</p>
+      <div class="why-box">
+        <strong>Why I built it</strong>
+        <p>I wanted to combine content structure, search-driven interaction, and a sense of cinematic visual storytelling.</p>
+      </div>
+      <div class="tag-cloud compact"><span>Search UI</span><span>Content architecture</span><span>Discovery flow</span><span>Story-led front end</span></div>
+      <div class="card-actions">
+        <a class="ghost-btn" href="https://cosmicbubblegumgirl.github.io/travel_recommendations/" target="_blank" rel="noreferrer">Open live project</a>
+      </div>
+    </article></div>
+      </div>
+    </section>
+
+    <section id="achievement">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <h3>Achievement observatory</h3>
+            <p>It represents the clearest signal of where I am going next. This was always the point at which I would see my front-end self develop into a full-stack entity.</p>
+          </div>
+        </div>
+        <div class="achievement-layout">
+          <article class="achievement-card glass reveal">
+            <div class="achievement-art image-trigger" data-image="assets/certs/ibm_fullstack.png" data-title="IBM Full-Stack JavaScript Developer" data-caption="My latest professional certificate">
+              <img src="assets/certs/ibm_fullstack.png" alt="IBM Full-Stack JavaScript Developer certificate" loading="lazy">
+            </div>
+            <div class="achievement-copy">
+              <div class="eyebrow">Latest accomplishment</div>
+              <h4>IBM Full-Stack JavaScript Developer Professional Certificate</h4>
+              <p>I’m proud of this milestone because it reflects sustained growth, not just a single course. It connects front-end development with backend logic, cloud-native thinking, DevOps awareness, deployment workflows, and modern JavaScript delivery.</p>
+              <div class="signal-row">
+                <span>Node.js</span>
+                <span>Express</span>
+                <span>React</span>
+                <span>DevOps</span>
+                <span>Docker</span>
+                <span>Kubernetes</span>
+              </div>
+              <div class="card-actions">
+                <a class="mini-btn primary" href="https://coursera.org/verify/professional-cert/HRTEQT6U6DPP" target="_blank" rel="noreferrer">Verify certificate</a>
+              </div>
+            </div>
+          </article>
+          <article class="course-card glass reveal">
+            <div class="eyebrow">12-course pathway</div>
+            <h4>What this certificate pulled together</h4>
+            
+            <ul class="course-list"><li>Introduction to Software Engineering</li><li>Introduction to HTML, CSS, & JavaScript</li><li>Getting Started with Git and GitHub</li><li>JavaScript Programming Essentials</li><li>Developing Front-End Apps with React</li><li>Developing Back-End Apps with Node.js and Express</li><li>Get Started with Cloud Native, DevOps, Agile, and NoSQL</li><li>Introduction to Containers w/ Docker, Kubernetes & OpenShift</li><li>Application Development using Microservices and Serverless</li><li>Node.js & MongoDB: Developing Back-end Database Applications</li><li>JavaScript Full Stack Capstone Project</li><li>Software Developer Career Guide and Interview Preparation</li></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="badges">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <h3>Badge nebula</h3>
+            <p>I wanted my badges to feel integrated into the design instead of dropped onto the page. This nebula keeps them clean, readable, and part of the same visual world as the rest of the site.</p>
+          </div>
+        </div>
+        <div class="badge-intro glass reveal">
+          <p>These badges show the momentum behind my portfolio: full-stack JavaScript, capstone delivery, Node and Express, cloud-native and DevOps foundations, software engineering essentials, project management, and data analytics. Click any badge to open it cleanly.</p>
+        </div>
+        <div class="badge-grid"><button class="badge-card glass reveal image-trigger" data-image="assets/badges/ibm_fullstack_badge.png" data-title="IBM Full-Stack JavaScript Developer Professional Certificate" data-caption="Issued Apr 14, 2026">
+      <div class="badge-art"><img src="assets/badges/ibm_fullstack_badge.png" alt="IBM Full-Stack JavaScript Developer Professional Certificate badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>IBM Full-Stack JavaScript Developer Professional Certificate</h5>
+        <p>Issued Apr 14, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/js_capstone.png" data-title="JavaScript Full Stack Capstone Project" data-caption="Issued Apr 14, 2026">
+      <div class="badge-art"><img src="assets/badges/js_capstone.png" alt="JavaScript Full Stack Capstone Project badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>JavaScript Full Stack Capstone Project</h5>
+        <p>Issued Apr 14, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/career_guide.png" data-title="Software Developer Career Guide and Interview Preparation" data-caption="Issued Apr 12, 2026">
+      <div class="badge-art"><img src="assets/badges/career_guide.png" alt="Software Developer Career Guide and Interview Preparation badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>Software Developer Career Guide and Interview Preparation</h5>
+        <p>Issued Apr 12, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/google_pm.png" data-title="Google Project Management Professional Certificate" data-caption="Issued Apr 10, 2026">
+      <div class="badge-art"><img src="assets/badges/google_pm.png" alt="Google Project Management Professional Certificate badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>Google Project Management Professional Certificate</h5>
+        <p>Issued Apr 10, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/containers.png" data-title="Containers & Kubernetes Essentials" data-caption="Issued Mar 31, 2026">
+      <div class="badge-art"><img src="assets/badges/containers.png" alt="Containers & Kubernetes Essentials badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>Containers & Kubernetes Essentials</h5>
+        <p>Issued Mar 31, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/cloud_native.png" data-title="Cloud Native, DevOps, Agile & NoSQL Essentials" data-caption="Issued Mar 20, 2026">
+      <div class="badge-art"><img src="assets/badges/cloud_native.png" alt="Cloud Native, DevOps, Agile & NoSQL Essentials badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>Cloud Native, DevOps, Agile & NoSQL Essentials</h5>
+        <p>Issued Mar 20, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/node_express.png" data-title="Node and Express Essentials" data-caption="Issued Mar 11, 2026">
+      <div class="badge-art"><img src="assets/badges/node_express.png" alt="Node and Express Essentials badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>Node and Express Essentials</h5>
+        <p>Issued Mar 11, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/js_essentials.png" data-title="JavaScript Programming Essentials" data-caption="Issued Mar 1, 2026">
+      <div class="badge-art"><img src="assets/badges/js_essentials.png" alt="JavaScript Programming Essentials badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>JavaScript Programming Essentials</h5>
+        <p>Issued Mar 1, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/software_eng.png" data-title="Software Engineering Essentials" data-caption="Issued Feb 22, 2026">
+      <div class="badge-art"><img src="assets/badges/software_eng.png" alt="Software Engineering Essentials badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>Software Engineering Essentials</h5>
+        <p>Issued Feb 22, 2026</p>
+      </div>
+    </button>
+<button class="badge-card glass reveal image-trigger" data-image="assets/badges/google_data.png" data-title="Google Data Analytics Professional Certificate" data-caption="Issued Dec 7, 2025">
+      <div class="badge-art"><img src="assets/badges/google_data.png" alt="Google Data Analytics Professional Certificate badge" loading="lazy"></div>
+      <div class="badge-copy">
+        <h5>Google Data Analytics Professional Certificate</h5>
+        <p>Issued Dec 7, 2025</p>
+      </div>
+    </button></div>
+      </div>
+    </section>
+
+    <section id="certificates">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <h3>Certificate constellation gallery</h3>
+            
+          </div>
+        </div>
+        <div class="certificate-layout">
+          <article class="cert-map glass reveal">
+            <div class="cert-map-grid"><button class="cert-node glass reveal active" data-cert-title="React Basics" data-cert-desc="This strengthened my component mindset and helped me think more intentionally about structure, reusable UI, and front-end flow." data-cert-image="assets/certs/react_basics.png">
+      <div class="cert-thumb"><img src="assets/certs/react_basics.png" alt="React Basics certificate" loading="lazy"></div>
+      <div class="cert-node-copy">
+        <h5>React Basics</h5>
+      </div>
+    </button>
+<button class="cert-node glass reveal" data-cert-title="SAP Technology Consultant Hands-on Project" data-cert-desc="This added enterprise context to my skill set and taught me how systems, implementation thinking, and structured delivery connect in bigger environments." data-cert-image="assets/certs/sap_project.png">
+      <div class="cert-thumb"><img src="assets/certs/sap_project.png" alt="SAP Technology Consultant Hands-on Project certificate" loading="lazy"></div>
+      <div class="cert-node-copy">
+        <h5>SAP Technology Consultant Hands-on Project</h5>
+      </div>
+    </button>
+<button class="cert-node glass reveal" data-cert-title="Google UX Design Professional Certificate" data-cert-desc="This sharpened the way I think about empathy, user journeys, visual hierarchy, and solving real problems with design." data-cert-image="assets/certs/google_ux.png">
+      <div class="cert-thumb"><img src="assets/certs/google_ux.png" alt="Google UX Design Professional Certificate certificate" loading="lazy"></div>
+      <div class="cert-node-copy">
+        <h5>Google UX Design Professional Certificate</h5>
+      </div>
+    </button>
+<button class="cert-node glass reveal" data-cert-title="Associate Data Analyst" data-cert-desc="This represents my analytical side: reading patterns, working with data, and turning information into something useful and understandable." data-cert-image="assets/certs/data_analyst.png">
+      <div class="cert-thumb"><img src="assets/certs/data_analyst.png" alt="Associate Data Analyst certificate" loading="lazy"></div>
+      <div class="cert-node-copy">
+        <h5>Associate Data Analyst</h5>
+      </div>
+    </button>
+<button class="cert-node glass reveal" data-cert-title="Qualifi Level 5 Diploma in TEFL" data-cert-desc="This deepened my communication style, clarity, and ability to guide people through information in a calm, human way." data-cert-image="assets/certs/tefl.png">
+      <div class="cert-thumb"><img src="assets/certs/tefl.png" alt="Qualifi Level 5 Diploma in TEFL certificate" loading="lazy"></div>
+      <div class="cert-node-copy">
+        <h5>Qualifi Level 5 Diploma in TEFL</h5>
+      </div>
+    </button>
+<button class="cert-node glass reveal" data-cert-title="Bachelor of Education" data-cert-desc="My degree shaped how I explain, structure, and support learning. It still influences the way I design interfaces and communicate through digital experiences." data-cert-image="assets/certs/degree.png">
+      <div class="cert-thumb"><img src="assets/certs/degree.png" alt="Bachelor of Education certificate" loading="lazy"></div>
+      <div class="cert-node-copy">
+        <h5>Bachelor of Education</h5>
+      </div>
+    </button></div>
+          </article>
+          <aside class="cert-detail glass reveal">
+            <div class="eyebrow">Selected star</div>
+            <div class="cert-feature-art image-trigger" id="certFeatureTrigger" data-image="assets/certs/ibm_fullstack.png" data-title="IBM Full-Stack JavaScript Developer" data-caption="Certificate highlight">
+              <img id="certFeatureImage" src="assets/certs/ibm_fullstack.png" alt="IBM Full-Stack JavaScript Developer certificate" loading="lazy">
+            </div>
+            <h4 id="certFeatureTitle">IBM Full-Stack JavaScript Developer</h4>
+            <p id="certFeatureDesc">My latest milestone and the anchor of this constellation. It reflects my move into full-stack JavaScript, backend thinking, cloud-native workflows, and deployment-ready development.</p>
+            <div class="constellation-note">I use this constellation to show range without sacrificing clarity. The clean framing keeps each certificate visible, readable, and part of one connected story.</div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="shell">
+        <div class="section-head reveal">
+          <div>
+            <h3>Let’s connect</h3>
+            <p>If you are looking for someone who blends creativity, research, communication, and evolving full-stack capability, this is the version of me I wanted you to meet through the journey.</p>
+          </div>
+        </div>
+        <div class="contact-grid"><a class="contact-card glass reveal" href="mailto:simon3m3ll3m@gmail.com">
+      <small>Email</small>
+      <strong>simon3m3ll3m@gmail.com</strong>
+    </a><a class="contact-card glass reveal" href="https://www.linkedin.com/in/simone-govender-91b8b2353" target="_blank" rel="noreferrer">
+      <small>LinkedIn</small>
+      <strong>linkedin.com/in/simone-govender-91b8b2353</strong>
+    </a><a class="contact-card glass reveal" href="https://www.credly.com/users/simone-govender.627f03de/badges#credly" target="_blank" rel="noreferrer">
+      <small>Badge profile</small>
+      <strong>View my badges</strong>
+    </a><a class="contact-card glass reveal" href="https://coursera.org/verify/professional-cert/HRTEQT6U6DPP" target="_blank" rel="noreferrer">
+      <small>IBM certificate</small>
+      <strong>Verify my latest milestone</strong>
+    </a></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div class="footer-box glass reveal footer-minimal">
+        <div class="signature">A QuantumCupCake creation</div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="modal" id="imageModal" aria-hidden="true" role="dialog" aria-label="Expanded image viewer">
+    <div class="modal-box">
+      <div class="modal-head">
+        <div>
+          <h4 id="modalTitle">Image preview</h4>
+          <p id="modalCaption"></p>
+        </div>
+        <button class="modal-close" id="modalClose" aria-label="Close image viewer">✕</button>
+      </div>
+      <div class="modal-art"><img id="modalImage" src="" alt="Expanded preview"></div>
+    </div>
+  </div>
+
+  
+  <script>
+    const progressBar = document.getElementById('progressBar');
+    const navAnchors = [...document.querySelectorAll('.nav-links a')];
+    const sections = navAnchors.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('in-view');
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navAnchors.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + entry.target.id));
+        }
+      });
+    }, { rootMargin: '-35% 0px -55% 0px' });
+    sections.forEach(section => sectionObserver.observe(section));
+
+    const onScroll = () => {
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+      progressBar.style.width = progress + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('night');
+      themeToggle.textContent = document.body.classList.contains('night') ? '☀' : '☾';
+      resizeCanvas();
+    });
+
+    document.querySelectorAll('.stop-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const id = btn.dataset.stop;
+        document.querySelectorAll('.stop-trigger').forEach(el => {
+          el.classList.toggle('active', el === btn);
+          el.setAttribute('aria-pressed', el === btn ? 'true' : 'false');
+        });
+        document.querySelectorAll('.stop-detail').forEach(panel => panel.classList.toggle('active', panel.dataset.stopPanel === id));
+      });
+    });
+
+    document.querySelectorAll('.skill-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const skill = tab.dataset.skill;
+        document.querySelectorAll('.skill-tab').forEach(el => {
+          el.classList.toggle('active', el === tab);
+          el.setAttribute('aria-pressed', el === tab ? 'true' : 'false');
+        });
+        document.querySelectorAll('.skill-panel').forEach(panel => panel.classList.toggle('active', panel.dataset.skillPanel === skill));
+      });
+    });
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.filter-btn').forEach(el => el.classList.toggle('active', el === btn));
+        document.querySelectorAll('[data-project-category]').forEach(card => {
+          const visible = filter === 'all' || card.dataset.projectCategory === filter;
+          card.classList.toggle('hidden', !visible);
+        });
+      });
+    });
+
+    const certTitle = document.getElementById('certFeatureTitle');
+    const certDesc = document.getElementById('certFeatureDesc');
+    const certImage = document.getElementById('certFeatureImage');
+    const certFeatureTrigger = document.getElementById('certFeatureTrigger');
+    document.querySelectorAll('.cert-node').forEach(node => {
+      node.addEventListener('click', () => {
+        document.querySelectorAll('.cert-node').forEach(el => el.classList.toggle('active', el === node));
+        certTitle.textContent = node.dataset.certTitle;
+        certDesc.textContent = node.dataset.certDesc;
+        certImage.src = node.dataset.certImage;
+        certImage.alt = node.dataset.certTitle + ' certificate';
+        certFeatureTrigger.dataset.image = node.dataset.certImage;
+        certFeatureTrigger.dataset.title = node.dataset.certTitle;
+        certFeatureTrigger.dataset.caption = 'Certificate highlight';
+      });
+    });
+
+    const modal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalCaption = document.getElementById('modalCaption');
+    const modalClose = document.getElementById('modalClose');
+
+    function openModal(src, title, caption) {
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      modalImage.src = src;
+      modalImage.alt = title;
+      modalTitle.textContent = title;
+      modalCaption.textContent = caption || '';
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    document.querySelectorAll('.image-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => openModal(trigger.dataset.image, trigger.dataset.title, trigger.dataset.caption));
+    });
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let clouds = [];
+    let dpr = 1;
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    function resizeCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = window.innerWidth + 'px';
+      canvas.style.height = window.innerHeight + 'px';
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const isNight = document.body.classList.contains('night');
+      particles = Array.from({ length: isNight ? Math.min(180, Math.floor(window.innerWidth / 8)) : Math.min(34, Math.floor(window.innerWidth / 42)) }, () => ({
+        x: random(0, window.innerWidth),
+        y: random(0, window.innerHeight),
+        r: isNight ? random(0.4, 1.9) : random(20, 52),
+        v: isNight ? random(0.03, 0.16) : random(0.08, 0.24),
+        a: isNight ? random(0.28, 0.95) : random(0.08, 0.2),
+        pulse: random(0.002, 0.01)
+      }));
+
+      clouds = Array.from({ length: isNight ? 3 : 7 }, () => ({
+        x: random(-180, window.innerWidth + 120),
+        y: random(40, window.innerHeight * 0.58),
+        w: random(140, 320),
+        h: random(40, 90),
+        v: random(0.06, 0.22),
+        a: isNight ? random(0.03, 0.08) : random(0.14, 0.26)
+      }));
+    }
+
+    function drawNightSky() {
+      particles.forEach(p => {
+        p.y += p.v;
+        p.a += Math.sin(Date.now() * p.pulse) * 0.002;
+        if (p.y > window.innerHeight + 8) {
+          p.y = -8;
+          p.x = random(0, window.innerWidth);
+        }
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(255,255,255,${Math.max(0.18, Math.min(1, p.a))})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      const moonX = window.innerWidth * 0.82;
+      const moonY = 110;
+      const moon = ctx.createRadialGradient(moonX, moonY, 8, moonX, moonY, 70);
+      moon.addColorStop(0, 'rgba(255,247,210,0.95)');
+      moon.addColorStop(0.5, 'rgba(255,247,210,0.3)');
+      moon.addColorStop(1, 'rgba(255,247,210,0)');
+      ctx.fillStyle = moon;
+      ctx.beginPath();
+      ctx.arc(moonX, moonY, 70, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = 'rgba(255,247,210,0.88)';
+      ctx.beginPath();
+      ctx.arc(moonX, moonY, 26, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(moonX + 10, moonY - 4, 24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.globalCompositeOperation = 'source-over';
+
+      clouds.forEach(c => {
+        c.x += c.v;
+        if (c.x - c.w > window.innerWidth + 120) c.x = -c.w - 140;
+        const grad = ctx.createRadialGradient(c.x, c.y, 10, c.x, c.y, c.w);
+        grad.addColorStop(0, `rgba(140,170,255,${c.a})`);
+        grad.addColorStop(1, 'rgba(140,170,255,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.ellipse(c.x, c.y, c.w, c.h, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function drawDaySky() {
+      const sunX = window.innerWidth * 0.82;
+      const sunY = 110;
+      const glow = ctx.createRadialGradient(sunX, sunY, 10, sunX, sunY, 110);
+      glow.addColorStop(0, 'rgba(255,241,179,0.95)');
+      glow.addColorStop(0.45, 'rgba(255,230,165,0.35)');
+      glow.addColorStop(1, 'rgba(255,230,165,0)');
+      ctx.fillStyle = glow;
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, 110, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = 'rgba(255,241,179,0.85)';
+      ctx.beginPath();
+      ctx.arc(sunX, sunY, 28, 0, Math.PI * 2);
+      ctx.fill();
+
+      particles.forEach(p => {
+        p.x += p.v;
+        if (p.x - p.r > window.innerWidth + 20) {
+          p.x = -80;
+          p.y = random(24, window.innerHeight * 0.58);
+        }
+        const grad = ctx.createRadialGradient(p.x, p.y, 8, p.x, p.y, p.r);
+        grad.addColorStop(0, `rgba(255,255,255,${p.a})`);
+        grad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      clouds.forEach(c => {
+        c.x += c.v;
+        if (c.x - c.w > window.innerWidth + 120) c.x = -c.w - 120;
+        const grad = ctx.createRadialGradient(c.x, c.y, 20, c.x, c.y, c.w);
+        grad.addColorStop(0, `rgba(255,255,255,${c.a})`);
+        grad.addColorStop(1, 'rgba(255,255,255,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.ellipse(c.x, c.y, c.w, c.h, 0, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    }
+
+    function animateSky() {
+      ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      if (document.body.classList.contains('night')) {
+        drawNightSky();
+      } else {
+        drawDaySky();
+      }
+      requestAnimationFrame(animateSky);
+    }
+
+    resizeCanvas();
+    animateSky();
+    window.addEventListener('resize', resizeCanvas);
+  </script>
+
+</body>
+</html>
